@@ -3,3 +3,4 @@ numpy>=1.26
 xgboost>=2.1
 yfinance>=0.2.54
 supabase>=2.20
+scikit-learn>=1.9
