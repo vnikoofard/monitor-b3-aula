@@ -140,14 +140,14 @@ on:
 
 jobs:
   pipeline:
-    runs-on: ubuntu-latest      # uma máquina Linux nova a cada execução
+    runs-on: ubuntu-24.04       # uma máquina Linux nova a cada execução (versão fixa)
     timeout-minutes: 30
     steps:
       - name: Copiar o repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Instalar o Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -175,7 +175,7 @@ jobs:
 | `name` | Nome exibido na aba Actions |
 | `schedule` + `cron` | Agenda: minuto 0, hora 1, de terça a sábado. O GitHub usa o horário UTC, então isso equivale a 22h de segunda a sexta em Brasília, depois do fechamento da bolsa |
 | `workflow_dispatch` | Cria o botão **Run workflow**, para rodar manualmente; `inputs.primeira_vez` vira uma caixa de seleção nesse botão |
-| `runs-on: ubuntu-latest` | A máquina: um Linux novo a cada execução, apagado no final |
+| `runs-on: ubuntu-24.04` | A máquina: um Ubuntu 24.04 novo a cada execução, apagado no final. A versão fica fixa para uma atualização do GitHub não mudar o ambiente sem aviso |
 | `timeout-minutes: 30` | Aborta se passar de 30 minutos (uma execução normal leva 2 a 4 minutos) |
 | Copiar o repositório | Traz o código do GitHub para a máquina |
 | Instalar o Python | Instala o Python 3.12 e guarda as bibliotecas em cache para as próximas execuções |
@@ -205,7 +205,7 @@ O nome do segundo secret é o que o código espera, mesmo quando o valor é a ch
 
 1. Abra a aba **Actions**. Se aparecer um aviso pedindo para habilitar os workflows, confirme.
 2. No menu lateral, clique em **Pipeline diário** e depois em **Run workflow**, à direita.
-3. Mantenha a branch `main`, **marque a caixa "Enviar todo o histórico de preços"** e clique no botão verde **Run workflow**.
+3. Mantenha a branch principal (`main` ou `master`, conforme o repositório), **marque a caixa "Enviar todo o histórico de preços"** e clique no botão verde **Run workflow**.
 4. Em alguns segundos surge uma execução com um círculo amarelo. Clique nela, depois no job **pipeline**, para ver os passos. Cada passo pode ser expandido; o passo "Rodar o pipeline" mostra o mesmo log que você viu na sua máquina, etapa por etapa.
 
 Duração esperada: cerca de 1 minuto para instalar as bibliotecas, alguns segundos de teste e 1 a 3 minutos para o pipeline. Na primeira execução, ele envia cerca de 18 mil linhas de preços (24 ações × 3 anos); nas seguintes, só os últimos 10 pregões.
@@ -255,10 +255,16 @@ streamlit run app/streamlit_app.py
 
 No PowerShell do Windows, o comando `cp` funciona igual (é um apelido de `Copy-Item`); só troque as barras do caminho se preferir: `copy .streamlit\secrets.toml.example .streamlit\secrets.toml`.
 
+**Atenção: preencha a cópia, nunca o modelo.** O comando acima cria um arquivo novo, `.streamlit/secrets.toml`, e é **nele** que vão a URL e a chave reais. O `secrets.toml.example` vai para o GitHub de propósito e deve continuar só com os valores de exemplo (`https://xxxxxxxx.supabase.co` e `sb_publishable_...`), para mostrar a quem clonar o projeto quais chaves preencher. O app lê apenas o `secrets.toml`.
+
+Para conferir que a cópia está sendo ignorada pelo git, rode `git check-ignore -v .streamlit/secrets.toml`: a resposta deve mostrar a linha correspondente do `.gitignore`.
+
+Se os valores reais acabarem no `.example` e forem para o GitHub, volte o arquivo aos valores de exemplo e faça um novo commit. Com a chave **publishable** o risco é baixo: ela foi feita para ser pública (todo navegador que abre o app a recebe), e a RLS continua protegendo os dados. Como ela fica no histórico do repositório, é um bom hábito trocá-la: em **Project Settings → API Keys**, crie uma nova publishable, atualize o `secrets.toml` e os Secrets do Streamlit Cloud, confira o app e só então apague a antiga. Com a chave **secreta**, trocar é obrigatório e imediato: ela ignora a RLS.
+
 ### Publicar no Streamlit Community Cloud
 
 1. Acesse [share.streamlit.io](https://share.streamlit.io), entre com a conta do GitHub e autorize o acesso aos seus repositórios.
-2. Clique em **Create app** e escolha publicar a partir de um repositório do GitHub. Repositório: `monitor-b3-aula`; branch: `main`; arquivo principal: `app/streamlit_app.py`. Escolha o endereço do app.
+2. Clique em **Create app** e escolha publicar a partir de um repositório do GitHub. Repositório: `monitor-b3-aula`; branch: a principal do repositório (`main` ou `master`); arquivo principal: `app/streamlit_app.py`. Escolha o endereço do app.
 3. Em **Advanced settings**, selecione Python 3.12 e, no campo **Secrets**, cole as duas linhas do seu `.streamlit/secrets.toml`, com a URL e a chave publishable.
 4. Clique em **Deploy**. A primeira publicação leva 2 a 3 minutos; o Streamlit instala as bibliotecas de `app/requirements.txt`.
 
@@ -288,6 +294,7 @@ A partir daqui o pipeline roda sozinho de segunda a sexta, às 22h. O acompanham
 - **Inatividade de 60 dias:** num repositório público sem nenhum commit por 60 dias, o GitHub desativa o agendamento. A aba Actions mostra um aviso com um botão para reativar; qualquer commit também reinicia a contagem. Vale lembrar disso nas férias.
 - **Atualizar o código:** edite o arquivo direto no GitHub (ícone de lápis) ou envie pelo terminal com `git add`, `git commit` e `git push`. A próxima execução já usa a versão nova. Os parâmetros do modelo ficam em `pipeline/config.py`.
 - **Supabase gratuito:** o projeto é pausado após um período sem uso. As gravações diárias devem mantê-lo ativo, mas confira o status no painel nas primeiras semanas.
+- **Depois da aula:** religue a confirmação por e-mail (**Authentication**, provedor **Email**, opção *Confirm email*). Com ela desligada, um app público facilita a criação de contas em massa por scripts, que poderiam consumir a cota gratuita de armazenamento com fotos.
 - **Chaves antigas:** se você usou a `service_role`, troque pela chave `sb_secret_` antes do fim de 2026. Basta atualizar o valor do secret; o código não muda.
 
 ## Solução de problemas
