@@ -1,0 +1,44 @@
+name: Pipeline diário
+
+on:
+  schedule:
+    # 01:00 UTC de terça a sábado = 22:00 em Brasília de segunda a sexta,
+    # depois do fechamento da B3.
+    - cron: "0 1 * * 2-6"
+  workflow_dispatch:            # cria o botão "Run workflow" na aba Actions
+    inputs:
+      primeira_vez:
+        description: "Enviar todo o histórico de preços (só na primeira execução)"
+        type: boolean
+        default: false
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest      # uma máquina Linux nova a cada execução
+    timeout-minutes: 30
+    steps:
+      - name: Copiar o repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar as bibliotecas
+        run: pip install -r requirements.txt
+
+      - name: Teste sem internet
+        run: python -m tests.teste_offline
+
+      - name: Rodar o pipeline
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ "${{ inputs.primeira_vez }}" = "true" ]; then
+            python -m pipeline.main --primeira-vez
+          else
+            python -m pipeline.main
+          fi
