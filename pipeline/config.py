@@ -3,7 +3,7 @@ tabela `ativos` do Supabase (para incluir uma ação, basta inserir uma linha)."
 
 ANOS_DE_HISTORICO = 3        # quanto histórico de preços baixar para treinar
 HORIZONTE_DIAS = 5           # prever o retorno dos próximos 5 pregões
-DIAS_VALIDACAO = 60          # últimos pregões usados para medir a qualidade do modelo
+DIAS_VALIDACAO = 30  #60        # últimos pregões usados para medir a qualidade do modelo
 
 # XGBoost: um modelo pequeno, de propósito
 XGB_PARAMS = {
