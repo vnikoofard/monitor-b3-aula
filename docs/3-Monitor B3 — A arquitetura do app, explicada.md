@@ -73,7 +73,7 @@ O **alvo**, aquilo que o modelo aprende a prever, é o retorno dos 5 pregões se
 
 ### Por que a validação separa o tempo
 
-Para medir se o modelo funciona, ele é treinado com o passado e avaliado nos 60 pregões mais recentes, que ele nunca viu. Entre os dois períodos fica um intervalo de 5 pregões: sem ele, o alvo dos últimos dias de treino (que olha 5 dias à frente) já conteria preços do período de avaliação, e o modelo pareceria melhor do que é. Embaralhar os dados, como se faz em muitos problemas de ML, cometeria o mesmo erro em escala maior.
+Para medir se o modelo funciona, ele é treinado com o passado e avaliado nos 30 pregões mais recentes, que ele nunca viu. Entre os dois períodos fica um intervalo de 5 pregões: sem ele, o alvo dos últimos dias de treino (que olha 5 dias à frente) já conteria preços do período de avaliação, e o modelo pareceria melhor do que é. Embaralhar os dados, como se faz em muitos problemas de ML, cometeria o mesmo erro em escala maior.
 
 &#91;embedded content: divisão do tempo · validação e modelo final\]
 

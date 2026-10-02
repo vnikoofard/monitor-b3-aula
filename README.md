@@ -6,6 +6,31 @@ Um web app completo com banco na nuvem, pipeline Python agendado e frontend no-c
 - **Pipeline Python**, rodando todo dia no **GitHub Actions**, baixa as cotações, calcula indicadores técnicos, treina um XGBoost e grava as previsões no banco.
 - **Frontend em Streamlit**, hospedado de graça no Streamlit Community Cloud, mostra o ranking e deixa cada usuário montar suas carteiras. (Há também um prompt para gerar o frontend no Lovable, como alternativa.)
 
+## Sequência dos guias das aulas
+
+Os três guias seguem a ordem das aulas, e o guia de implantação é usado aos poucos, ao longo de três delas:
+
+| Aula | Apresentação | Guia usado | Que parte |
+|---|---|---|---|
+| 1 · SQL e o banco | Aula 1 | [Construindo o banco no Supabase](docs/1-Monitor%20B3%20%E2%80%94%20Construindo%20o%20banco%20no%20Supabase.md) | Inteiro: a construção ao vivo, passo a passo |
+| 2 · Git e GitHub | Aula 2 | [Guia de implantação](docs/2-Monitor%20B3%20%E2%80%94%20Guia%20de%20implantação%20passo%20a%20passo.md) | "Antes de começar" e Etapa 2 (repositório no GitHub) |
+| 3 · Streamlit | Aula 3 | [Guia de implantação](docs/2-Monitor%20B3%20%E2%80%94%20Guia%20de%20implantação%20passo%20a%20passo.md) | Etapa 6, parte "Testar na sua máquina" |
+| 4 · Arquitetura e pipeline | Aula 4 | [A arquitetura do app, explicada](docs/3-Monitor%20B3%20%E2%80%94%20A%20arquitetura%20do%20app,%20explicada.md) e [Guia de implantação](docs/2-Monitor%20B3%20%E2%80%94%20Guia%20de%20implantação%20passo%20a%20passo.md) | A arquitetura como leitura de apoio; do guia de implantação, as Etapas 3 a 5 (workflow, secrets, primeira execução, conferir os dados), o resto da Etapa 6 (publicar o app e testar com dois usuários) e a Rotina |
+
+Os slides de cada aula ficam em [docs/slides](docs/slides):
+
+- [Aula 1 — SQL e o banco do Monitor B3](docs/slides/Aula%201%20%E2%80%94%20SQL%20e%20o%20banco%20do%20Monitor%20B3.pdf)
+- [Aula 2 — Git e GitHub](docs/slides/Aula%202%20%E2%80%94%20Git%20e%20GitHub.pdf)
+- [Aula 3 — Introdução ao Streamlit](docs/slides/Aula%203%20%E2%80%94%20Introdução%20ao%20Streamlit.pdf)
+- [Aula 4 — Arquitetura do Monitor B3 e o pipeline](docs/slides/Aula%204%20%E2%80%94%20Arquitetura%20do%20Monitor%20B3%20e%20o%20pipeline.pdf)
+
+
+> Um detalhe: a Etapa 1 do guia de implantação (Supabase) repete, de forma resumida, o que o guia de construção faz em detalhe. Quem construiu o banco na Aula 1 pode pular essa etapa, só copiando a URL e a chave secreta do projeto, que aparecem nos itens 5 e 6 dela.
+
+
+
+## Estrutura do código
+
 ```
 monitor-b3-aula/
 ├── sql/01_schema.sql                  # cria todo o banco no Supabase
@@ -35,7 +60,7 @@ monitor-b3-aula/
 | 1 | `banco.py` | Lê da tabela `ativos` quais ações acompanhar |
 | 2 | `dados.py` | Baixa 3 anos de cotações do Yahoo Finance |
 | 3 | `indicadores.py` | Calcula 8 indicadores técnicos e o alvo (retorno dos próximos 5 pregões) |
-| 4 | `modelo.py` | Mede a qualidade nos últimos 60 pregões, retreina com tudo e prevê o último dia |
+| 4 | `modelo.py` | Mede a qualidade nos últimos 30 pregões, retreina com tudo e prevê o último dia |
 | 5 | `banco.py` | Grava preços, a versão do modelo e as previsões; preenche os retornos realizados |
 
 Os 8 indicadores: retorno em 5, 21 e 63 pregões; volatilidade de 21 pregões; RSI de 14;
