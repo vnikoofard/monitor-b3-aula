@@ -4,7 +4,7 @@ Sep 30, 2026 · @Vahid Nikoofard
 
 ## O modelo de dados
 
-O banco tem 8 tabelas em dois grupos: 5 tabelas de mercado, que o pipeline Python preenche e todos os usuários leem, e 3 tabelas do usuário, em que cada um só vê o que é seu. Juntas, elas mostram os três tipos de relação que a aula precisa cobrir.
+O banco tem 8 tabelas em dois grupos: 5 tabelas de mercado, que o pipeline Python preenche e todos os usuários leem, e 3 tabelas do usuário, em que cada um só vê o que é seu. Juntas, elas mostram os três tipos de relação que a vamos precisar.
 
 | Relação | Exemplo no projeto | Como se implementa |
 | --- | --- | --- |
@@ -16,15 +16,15 @@ O banco tem 8 tabelas em dois grupos: 5 tabelas de mercado, que o pipeline Pytho
 
 `ativos` é o centro do modelo: três tabelas apontam para ela. A única seta que cruza os dois grupos liga `carteira_itens` a `ativos`, porque as carteiras dos usuários são feitas de ações do mercado.
 
-O guia constrói tudo primeiro pela interface do Supabase, sem código, para os alunos verem cada decisão. Três peças só existem em SQL (o trigger de cadastro, as views e a função de montar carteira) e entram no Passo 7. Ao final, há o script completo, que gera tudo de uma vez.
+O guia constrói tudo primeiro pela interface do Supabase, sem código, para visualizar melhor a cada decisão. Três peças só existem em SQL (o trigger de cadastro, as views e a função de montar carteira) e entram no Passo 7. Ao final, há o script completo, que gera tudo de uma vez.
 
 ## Antes de começar
 
 Crie um projeto novo no Supabase: **New project**, nome `monitor-b3`, região **South America (São Paulo)**, plano **Free**. A criação leva 1 a 2 minutos.
 
-A aula usa seis telas do menu lateral:
+Usaremos seis telas do menu lateral:
 
-| Tela | Para que serve na aula |
+| Tela | Para que serve |
 | --- | --- |
 | **Table Editor** | Criar tabelas, colunas e relações sem código; ver e editar linhas |
 | **SQL Editor** | Rodar comandos SQL: views, funções, consultas de teste |
@@ -65,7 +65,7 @@ Apague a coluna `created_at` sugerida: ela não é necessária aqui.
 | `setor_id` | `int8` | Não nulo; chave estrangeira → `setores.id` |
 | `ativo` | `bool` | Não nulo, valor padrão `true` |
 
-Ponto para a aula: a chave primária não precisa ser um número. O ticker já identifica a ação de forma única.
+Ponto importante: a chave primária não precisa ser um número. O ticker já identifica a ação de forma única.
 
 ### `precos_diarios` — chave primária composta
 
@@ -205,7 +205,7 @@ Três pontos para discutir com a turma:
 
 - As tabelas de mercado não têm política de escrita. Quem grava nelas é o pipeline Python, com a chave secreta, que ignora a RLS.
 - `carteira_itens` não tem `user_id`. A política descobre o dono olhando a carteira a que o item pertence: é uma subconsulta dentro da regra de segurança.
-- O editor de políticas mostra, embaixo, o comando SQL equivalente. Vale mostrar aos alunos que a interface está só escrevendo SQL por eles.
+- O editor de políticas mostra, embaixo, o comando SQL equivalente.
 
 ## Passo 6 — Storage: a foto de cada usuário
 
@@ -406,7 +406,7 @@ Este script cria tudo dos Passos 1 a 7 de uma vez, num projeto vazio: tabelas, r
 
 ```sql
 -- =====================================================================
---  MONITOR B3 (versão de aula) — schema completo do Supabase
+--  MONITOR B3 — schema completo do Supabase
 --  Execute no SQL Editor, uma única vez, de cima para baixo.
 --
 --  8 tabelas:

@@ -154,7 +154,7 @@ O projeto é pequeno, mas as decisões de arquitetura são as mesmas de sistemas
 6. **Testar antes de gravar.** O workflow roda o teste sem internet antes do pipeline; se ele falhar, nada chega ao banco.
 7. **Avaliar respeitando o tempo.** Em dados que evoluem no tempo, treina-se com o passado e avalia-se no futuro, com um intervalo entre os dois.
 
-## Para explorar em aula
+## Para explorar
 
 Cada exercício mexe em uma peça e mostra o efeito nas outras.
 

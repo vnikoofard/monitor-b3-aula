@@ -1,0 +1,9 @@
+body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; line-height: 1.45; }
+@page { size: A4; margin: 2cm; }
+h1, h2, h3 { color: #1C2433; }
+table { border-collapse: collapse; width: 100%; font-size: 10pt; }
+th, td { border: 1px solid #ccc; padding: 4px 8px; vertical-align: top; }
+pre, code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; }
+pre { background: #f4f4f4; padding: 8px; white-space: pre-wrap; }
+
+/*pandoc guia.md -o guia.pdf --pdf-engine=weasyprint --css=estilo.css --metadata title="Monitor B3"*/

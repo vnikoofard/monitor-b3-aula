@@ -63,8 +63,7 @@ monitor-b3-aula/
 | 4 | `modelo.py` | Mede a qualidade nos últimos 30 pregões, retreina com tudo e prevê o último dia |
 | 5 | `banco.py` | Grava preços, a versão do modelo e as previsões; preenche os retornos realizados |
 
-Os 8 indicadores: retorno em 5, 21 e 63 pregões; volatilidade de 21 pregões; RSI de 14;
-distância do preço para as médias móveis de 20 e 50; volume relativo.
+Os 8 indicadores: retorno em 5, 21 e 63 pregões; volatilidade de 21 pregões; RSI de 14; distância do preço para as médias móveis de 20 e 50; volume relativo.
 
 ## Rodar na sua máquina
 
@@ -91,10 +90,7 @@ cp .streamlit/secrets.toml.example .streamlit/secrets.toml   # e preencha URL e 
 streamlit run app/streamlit_app.py
 ```
 
-O app usa a chave **publishable** e o login do Supabase: depois que o usuário entra, cada
-consulta vai ao banco com a identidade dele, e a RLS decide o que ele vê. A conexão de cada
-usuário fica em `st.session_state`; nunca em `st.cache_resource`, que é compartilhado entre
-todos os usuários do app.
+O app usa a chave **publishable** e o login do Supabase: depois que o usuário entra, cada consulta vai ao banco com a identidade dele, e a RLS decide o que ele vê. A conexão de cada usuário fica em `st.session_state`; nunca em `st.cache_resource`, que é compartilhado entre todos os usuários do app.
 
 ## Implantação
 

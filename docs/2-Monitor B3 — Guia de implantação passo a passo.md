@@ -58,7 +58,7 @@ Ao final desta etapa, o banco tem 8 tabelas, 2 views, a função `montar_carteir
    Devem aparecer 8 linhas `BASE TABLE` (`ativos`, `carteira_itens`, `carteiras`, `modelos`, `precos_diarios`, `previsoes`, `profiles`, `setores`) e 2 linhas `VIEW` (`v_desempenho_carteiras`, `v_ranking_atual`). A tabela `ativos` já tem 24 ações. No menu **Storage**, deve existir o bucket `avatares`.
 5. Copie a **URL do projeto**, no formato `https://xxxxxxxx.supabase.co`. Ela aparece no botão **Connect** no topo do painel e nas configurações de API do projeto.
 6. Copie a **chave secreta**: em **Project Settings → API Keys**, na seção de secret keys, revele e copie a chave que começa com `sb_secret_`. Se o seu projeto só mostrar as chaves antigas (aba Legacy), a `service_role` também funciona, mas o Supabase vai descontinuá-la até o fim de 2026.
-7. Para a aula, desative a confirmação por e-mail em **Authentication**, nas configurações do provedor **Email** (opção *Confirm email*). Assim, os alunos criam contas de teste sem precisar abrir a caixa de entrada.
+7. Para a aula, desative a confirmação por e-mail em **Authentication**, nas configurações do provedor **Email** (opção *Confirm email*). Assim, as pessoas podem criar contas de teste sem precisar abrir a caixa de entrada.
 
 A chave secreta ignora todas as regras de segurança (RLS) do banco. Ela só vai para os secrets do GitHub: nunca no código, no frontend ou num e-mail. O frontend usa outra chave, a publishable, que o Lovable configura sozinho.
 
@@ -276,7 +276,7 @@ No plano gratuito, um app sem acesso por 12 horas hiberna, e o primeiro visitant
 
 ### Teste de segurança com dois usuários
 
-Esse teste mostra na prática o que as políticas de RLS fazem, e é um bom momento da aula.
+Esse teste mostra na prática o que as políticas de RLS fazem.
 
 - [ ] Crie o usuário A, monte uma carteira e confira que ela aparece em **Minhas carteiras**
 - [ ] Ainda como A, troque a foto em **Meu perfil**; no Supabase, em **Storage → avatares**, aparece uma pasta com o id de A
@@ -294,7 +294,7 @@ A partir daqui o pipeline roda sozinho de segunda a sexta, às 22h. O acompanham
 - **Inatividade de 60 dias:** num repositório público sem nenhum commit por 60 dias, o GitHub desativa o agendamento. A aba Actions mostra um aviso com um botão para reativar; qualquer commit também reinicia a contagem. Vale lembrar disso nas férias.
 - **Atualizar o código:** edite o arquivo direto no GitHub (ícone de lápis) ou envie pelo terminal com `git add`, `git commit` e `git push`. A próxima execução já usa a versão nova. Os parâmetros do modelo ficam em `pipeline/config.py`.
 - **Supabase gratuito:** o projeto é pausado após um período sem uso. As gravações diárias devem mantê-lo ativo, mas confira o status no painel nas primeiras semanas.
-- **Depois da aula:** religue a confirmação por e-mail (**Authentication**, provedor **Email**, opção *Confirm email*). Com ela desligada, um app público facilita a criação de contas em massa por scripts, que poderiam consumir a cota gratuita de armazenamento com fotos.
+- **Depois do teste:** religue a confirmação por e-mail (**Authentication**, provedor **Email**, opção *Confirm email*). Com ela desligada, um app público facilita a criação de contas em massa por scripts, que poderiam consumir a cota gratuita de armazenamento com fotos.
 - **Chaves antigas:** se você usou a `service_role`, troque pela chave `sb_secret_` antes do fim de 2026. Basta atualizar o valor do secret; o código não muda.
 
 ## Solução de problemas
