@@ -47,6 +47,7 @@ Ao final desta etapa, o banco tem 8 tabelas, 2 views, a função `montar_carteir
 2. Aguarde a criação, que leva de 1 a 2 minutos.
 3. Abra o **SQL Editor**, clique em **New query**, cole o conteúdo inteiro de `sql/01_schema.sql` e clique em **Run**. O resultado esperado é `Success. No rows returned`. Rode esse arquivo **uma única vez**.
 4. Verifique, numa nova consulta:
+5. 
 
    ```sql
    select table_name, table_type
@@ -56,9 +57,9 @@ Ao final desta etapa, o banco tem 8 tabelas, 2 views, a função `montar_carteir
    ```
 
    Devem aparecer 8 linhas `BASE TABLE` (`ativos`, `carteira_itens`, `carteiras`, `modelos`, `precos_diarios`, `previsoes`, `profiles`, `setores`) e 2 linhas `VIEW` (`v_desempenho_carteiras`, `v_ranking_atual`). A tabela `ativos` já tem 24 ações. No menu **Storage**, deve existir o bucket `avatares`.
-5. Copie a **URL do projeto**, no formato `https://xxxxxxxx.supabase.co`. Ela aparece no botão **Connect** no topo do painel e nas configurações de API do projeto.
-6. Copie a **chave secreta**: em **Project Settings → API Keys**, na seção de secret keys, revele e copie a chave que começa com `sb_secret_`. Se o seu projeto só mostrar as chaves antigas (aba Legacy), a `service_role` também funciona, mas o Supabase vai descontinuá-la até o fim de 2026.
-7. Para a aula, desative a confirmação por e-mail em **Authentication**, nas configurações do provedor **Email** (opção *Confirm email*). Assim, as pessoas podem criar contas de teste sem precisar abrir a caixa de entrada.
+6. Copie a **URL do projeto**, no formato `https://xxxxxxxx.supabase.co`. Ela aparece no botão **Connect** no topo do painel e nas configurações de API do projeto.
+7. Copie a **chave secreta**: em **Project Settings → API Keys**, na seção de secret keys, revele e copie a chave que começa com `sb_secret_`. Se o seu projeto só mostrar as chaves antigas (aba Legacy), a `service_role` também funciona, mas o Supabase vai descontinuá-la até o fim de 2026.
+8. Para a aula, desative a confirmação por e-mail em **Authentication**, nas configurações do provedor **Email** (opção *Confirm email*). Assim, as pessoas podem criar contas de teste sem precisar abrir a caixa de entrada.
 
 A chave secreta ignora todas as regras de segurança (RLS) do banco. Ela só vai para os secrets do GitHub: nunca no código, no frontend ou num e-mail. O frontend usa outra chave, a publishable, que o Lovable configura sozinho.
 
