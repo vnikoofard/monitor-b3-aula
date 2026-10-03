@@ -1,4 +1,4 @@
-# Prompt do frontend — Monitor B3 (Lovable, Bolt ou v0)
+# Prompt do frontend — Monitor B3 (Lovable, Bolt ou v0, reflex)
 
 Antes da primeira mensagem, crie um projeto NOVO e conecte o seu Supabase
 (no Lovable: More → Cloud → "Already have a Supabase project?" → Connect). Não deixe o
